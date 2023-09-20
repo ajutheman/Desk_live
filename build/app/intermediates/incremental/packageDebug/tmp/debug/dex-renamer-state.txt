@@ -1,0 +1,4 @@
+#Thu Sep 21 01:01:40 IST 2023
+base.0=/Users/ajmalm/StudioProjects/Desk_live/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
