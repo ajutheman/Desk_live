@@ -1,3 +1,4 @@
+import 'package:app_templet/pages/feeder_page.dart';
 import 'package:app_templet/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 

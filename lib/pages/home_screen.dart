@@ -13,9 +13,6 @@ class HomeScreen extends StatelessWidget {
           child: TextWidget(
             text: "DeskLive",
             fontSize: 22,
-            onPressed: () {
-              print("123");
-            },
           ),
         ),
         actions: [

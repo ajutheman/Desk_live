@@ -1,35 +1,24 @@
 import 'package:flutter/material.dart';
 
-class TextWidget extends StatefulWidget {
-  String? text;
+class TextWidget extends StatelessWidget {
+  String text;
   double? fontSize;
-  Function? onPressed;
   String? fontFamily;
+  Color? textcolor;
   TextWidget({
     super.key,
-    this.text,
+    required this.text,
     this.fontSize,
-    this.onPressed,
+    this.fontFamily,
+    this.textcolor,
   });
 
   @override
-  State<TextWidget> createState() => _TextWidgetState();
-}
-
-class _TextWidgetState extends State<TextWidget> {
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.onPressed!();
-      },
-      child: Text(
-        widget.text!,
-        style: TextStyle(
-          fontSize: widget.fontSize ?? 13,
-          fontFamily: widget.fontFamily,
-        ),
-      ),
+    return Text(
+      text,
+      style: TextStyle(
+          fontSize: fontSize ?? 13, fontFamily: fontFamily, color: textcolor),
     );
   }
 }
