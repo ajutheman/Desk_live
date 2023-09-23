@@ -1,7 +1,30 @@
+import 'package:app_templet/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-import '../widget/category_list.dart';
+import '../widget/category_biulder.dart';
+import '../widget/news_card.dart';
+
 // Import your CategoryList widget
+List<Map<String, dynamic>> newsArticles = [
+  {
+    'title': 'ട്രെൻഡിങ്',
+    'iconPath': 'assets/icons/Vector.svg',
+  },
+  {
+    'title': 'ടോപ് സ്റ്റോറീസ്',
+    'iconPath': 'assets/icons/Vector1.svg',
+  },
+  {
+    'title': 'മൈ ഫീഡ്',
+    'iconPath': 'assets/icons/vector2.svg',
+  },
+  {
+    'title': 'ഓൾ ന്യൂസ്',
+    'iconPath': 'assets/icons/vector3.svg',
+  },
+  // Add more articles as needed
+];
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -10,11 +33,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "DeskLive",
-            style: TextStyle(fontSize: 22),
-          ),
+        title: Row(
+          children: [
+            SizedBox(
+              width: 130,
+            ),
+            Text(
+              "Desk",
+              style: TextStyle(fontSize: 22),
+            ),
+            Text(
+              "Live",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -26,40 +58,51 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             // List of news articles using a ListView.builder
             Padding(
-              padding: const EdgeInsets.all(18.0),
+              padding: const EdgeInsets.all(24.0),
               child: Container(
-                width: MediaQuery.of(context).size.width,
+                width: screenWidth(context),
+                //  MediaQuery.of(context).size.width,
                 height: 120,
                 color: Colors.white10,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount:
-                      4, // Replace with your actual number of news articles
+                  itemCount: newsArticles.length, // Use the length of your list
                   itemBuilder: (context, index) {
+                    final article = newsArticles[index];
                     return Column(
                       children: [
                         Container(
                           height: 67,
                           width: 67,
                           decoration: BoxDecoration(
+                            color: Color(0xffD9D9D9),
+                            // color: Colors.cyan,
                             border: Border.all(
                               color: Color(0xffD9D9D9),
                             ),
                             shape: BoxShape.circle,
                           ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              // "assets/icons/Vector.svg",
+                              article[
+                                  'iconPath'], // Use the SVG path from your list
+                              width: 40,
+                              height: 40,
+                            ),
+                          ),
                         ),
-                        SizedBox(
-                            height:
-                                8), // Adjust the spacing between the image and subtitle
+                        SizedBox(height: 8),
                         Text(
-                          "News Article $index", // Replace with the actual article title
+                          article['title'], // Use the title from your list
                           style: TextStyle(
-                            fontSize: 12, // Adjust the font size as needed
+                            fontSize: 9,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -73,20 +116,49 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                  height: 200,
-                  width: 400,
-                  //color: Colors.red,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(20.0)), // Adjust the radius as needed
-                  )),
+            Container(
+              // height: screenHeight(context, dividedBy: 3.5),
+              // width: screenWidth(context, dividedBy: 1.2),
+              child: NewsCard(
+                imagePath:
+                    'assets/images/pexels-photo-1684916.jpg', // Provide the image path
+                title:
+                    "കേരളത്തിൽ2 ജില്ലകളിൽയെല്ലോ അലർട്ട് പ്രഖ്യാപിച്ചു", // Provide the title
+              ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Categories",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 26),
+                  ),
+                ],
+              ),
+            ),
+
+            // Add more NewsCard widgets with different data as needed
+
+//feeding news field container
+//             Padding(
+//               padding: const EdgeInsets.all(20.0),
+//               child: Container(
+//                   height: 246,
+//                   width: 334,
+//                   //color: Colors.red,
+//                   decoration: BoxDecoration(
+//                     color: Colors.grey[200],
+//                     borderRadius: BorderRadius.all(
+//                         Radius.circular(20.0)), // Adjust the radius as needed
+//                   )),
+//             ),
             // Add the CategoryList widget here
-            CategoryList(), // Replace with your CategoryList widget
+            CategoryBuilder(),
+            //CategoryList(), // Replace with your CategoryList widget
           ],
         ),
       ),
