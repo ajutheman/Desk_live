@@ -1,6 +1,4 @@
-import 'package:app_templet/pages/feeder_page.dart';
 import 'package:app_templet/pages/home_screen.dart';
-import 'package:app_templet/pages/main_news.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,10 +29,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffFFFAE7)),
         useMaterial3: true,
       ),
-      home: const MainNews(),
+      home: HomeScreen(),
+      // MainNews(),
       debugShowCheckedModeBanner: false,
     );
   }

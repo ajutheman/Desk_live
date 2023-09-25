@@ -38,7 +38,9 @@ class HomeScreen extends StatelessWidget {
     //  var newsArticles;
 
     return Scaffold(
+      backgroundColor: Color(0xffFFFAE7),
       appBar: AppBar(
+        backgroundColor: Color(0xffFFFAE7),
         title:
             Center(child: Image(image: AssetImage("assets/images/DeskLive.png"))
                 // Text(
@@ -60,95 +62,96 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // List of news articles using a ListView.builder
-            Padding(
-              padding: const EdgeInsets.all(29.0),
-              child: Container(
-                width: screenWidth(context),
-                //  MediaQuery.of(context).size.width,
-                height: 120,
-                color: Color(0xffFFFFFF),
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: newsArticles.length, // Use the length of your list
-                  itemBuilder: (context, index) {
-                    final article = newsArticles[index];
-                    return GestureDetector(
-                      onTap: () {
-                        print("object");
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 76,
-                            width: 76,
-                            decoration: BoxDecoration(
-                              color: Color(0xffD9D9D9),
-                              border: Border.all(
+        child: SizedBox(
+          height: screenHeight(context, dividedBy: 1),
+          width: screenWidth(context, dividedBy: 1),
+          child: Column(
+            children: [
+              // List of news articles using a ListView.builder
+              Padding(
+                padding: const EdgeInsets.all(29.0),
+                child: Container(
+                  width: screenWidth(context),
+                  //  MediaQuery.of(context).size.width,
+                  height: 120,
+                  color: Color(0xffFFFAE7),
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: newsArticles.length,
+                    // Use the length of your list
+                    itemBuilder: (context, index) {
+                      final article = newsArticles[index];
+                      return GestureDetector(
+                        onTap: () {
+                          print("object");
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 76,
+                              width: 76,
+                              decoration: BoxDecoration(
                                 color: Color(0xffD9D9D9),
+                                border: Border.all(
+                                  color: Color(0xffD9D9D9),
+                                ),
+                                shape: BoxShape.circle,
                               ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: SvgPicture.asset(
-                                article
-                                    .iconPath, // Use the SVG path from your NewsArticle instance
-                                width: 40,
-                                height: 40,
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  article.iconPath,
+                                  // Use the SVG path from your NewsArticle instance
+                                  width: 40,
+                                  height: 40,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            article
-                                .title, // Use the title from your NewsArticle instance
-                            style: TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold,
+                            SizedBox(height: 8),
+                            Text(
+                              article.title,
+                              // Use the title from your NewsArticle instance
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                          ],
+                        ),
+                      );
+                    },
 
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 21);
-                  },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(width: 21);
+                    },
+                  ),
                 ),
               ),
-            ),
 
-            Container(
-              // height: screenHeight(context, dividedBy: 3.5),
-              // width: screenWidth(context, dividedBy: 1.2),
-              child: NewsCard(
+              NewsCard(
                 imagePath:
-                    'https://cdn.britannica.com/87/186687-050-3AA9E551/Justin-Trudeau-2015.jpg', // Provide the image path
+                    'https://cdn.britannica.com/87/186687-050-3AA9E551/Justin-Trudeau-2015.jpg',
+                // Provide the image path
                 title: "വിമാനത്തിന് തകരാർ,"
                     "ജസ്റ്റിൻ ട്രൂഡോയും സംഘവും"
                     " ഇന്ന് മടങ്ങില്ല ഇന്ത്യയിൽ തുടരും", // Provide the title
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Row(
-                children: [
-                  Text(
-                    "Categories",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                ],
+              const Padding(
+                padding: EdgeInsets.all(18.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Categories",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                  ],
+                ),
               ),
-            ),
 
-            // Add more NewsCard widgets with different data as needed
+              // Add more NewsCard widgets with different data as needed
 
 //feeding news field container
 //             Padding(
@@ -163,15 +166,18 @@ class HomeScreen extends StatelessWidget {
 //                         Radius.circular(20.0)), // Adjust the radius as needed
 //                   )),
 //             ),
-            // Add the CategoryList widget here
-            CategoryBuilder(),
-            //CategoryList(), // Replace with your CategoryList widget
-          ],
+              // Add the CategoryList widget here
+              CategoryBuilder(),
+              //CategoryList(), // Replace with your CategoryList widget
+            ],
+          ),
         ),
       ),
     );
   }
 }
+//news card class code
+//convert from widget to class
 
 class NewsArticle {
   final String iconPath;
@@ -204,7 +210,7 @@ class NewsCard extends StatelessWidget {
         //     textAlign: TextAlign.center,
         //   ),
         // ),
-        height: screenHeight(context, dividedBy: 3.5),
+        height: screenHeight(context, dividedBy: 3.7),
         width: screenWidth(context, dividedBy: 1.1),
         decoration: BoxDecoration(
           image: DecorationImage(
