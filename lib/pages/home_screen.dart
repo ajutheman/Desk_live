@@ -1,30 +1,7 @@
-import 'package:app_templet/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
-import '../widget/category_biulder.dart';
-import '../widget/news_card.dart';
-
+import '../widget/category_list.dart';
 // Import your CategoryList widget
-List<Map<String, dynamic>> newsArticles = [
-  {
-    'title': 'ട്രെൻഡിങ്',
-    'iconPath': 'assets/icons/Vector.svg',
-  },
-  {
-    'title': 'ടോപ് സ്റ്റോറീസ്',
-    'iconPath': 'assets/icons/Vector1.svg',
-  },
-  {
-    'title': 'മൈ ഫീഡ്',
-    'iconPath': 'assets/icons/vector2.svg',
-  },
-  {
-    'title': 'ഓൾ ന്യൂസ്',
-    'iconPath': 'assets/icons/vector3.svg',
-  },
-  // Add more articles as needed
-];
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -33,20 +10,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            SizedBox(
-              width: 130,
-            ),
-            Text(
-              "Desk",
-              style: TextStyle(fontSize: 22),
-            ),
-            Text(
-              "Live",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          ],
+        title: Center(
+          child: Text(
+            "DeskLive",
+            style: TextStyle(fontSize: 22),
+          ),
         ),
         actions: [
           IconButton(
@@ -58,7 +26,6 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             // List of news articles using a ListView.builder
