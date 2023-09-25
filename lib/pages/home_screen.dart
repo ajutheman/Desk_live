@@ -1,13 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-import '../widget/category_list.dart';
+import '../utils.dart';
+import '../widget/category_biulder.dart';
+import '../widget/news_card.dart';
 // Import your CategoryList widget
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key});
+  final List<NewsArticle> newsArticles = [
+    NewsArticle(
+      iconPath:
+          'assets/icons/Vector.svg', // Replace with your actual icon paths
+      title: 'ട്രെൻഡിങ് ',
+    ),
+    NewsArticle(
+      iconPath:
+          'assets/icons/Vector1.svg', // Replace with your actual icon paths
+      title: 'ടോപ് സ്റ്റോറീസ് ',
+    ),
+    NewsArticle(
+      iconPath:
+          'assets/icons/vector2.svg', // Replace with your actual icon paths
+      title: 'മൈ ഫീഡ് ',
+    ),
+    NewsArticle(
+      iconPath:
+          'assets/icons/vector3.svg', // Replace with your actual icon paths
+      title: 'ഓൾ ന്യൂസ് ',
+    ),
+    // Add more articles as needed
+  ];
+
+  HomeScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    //  var newsArticles;
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -30,52 +59,57 @@ class HomeScreen extends StatelessWidget {
           children: [
             // List of news articles using a ListView.builder
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(29.0),
               child: Container(
                 width: screenWidth(context),
                 //  MediaQuery.of(context).size.width,
                 height: 120,
-                color: Colors.white10,
+                color: Color(0xffFFFFFF),
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemCount: newsArticles.length, // Use the length of your list
                   itemBuilder: (context, index) {
                     final article = newsArticles[index];
-                    return Column(
-                      children: [
-                        Container(
-                          height: 67,
-                          width: 67,
-                          decoration: BoxDecoration(
-                            color: Color(0xffD9D9D9),
-                            // color: Colors.cyan,
-                            border: Border.all(
+                    return GestureDetector(
+                      onTap: () {
+                        print("object");
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 76,
+                            width: 76,
+                            decoration: BoxDecoration(
                               color: Color(0xffD9D9D9),
+                              border: Border.all(
+                                color: Color(0xffD9D9D9),
+                              ),
+                              shape: BoxShape.circle,
                             ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              // "assets/icons/Vector.svg",
-                              article[
-                                  'iconPath'], // Use the SVG path from your list
-                              width: 40,
-                              height: 40,
+                            child: Center(
+                              child: SvgPicture.asset(
+                                article
+                                    .iconPath, // Use the SVG path from your NewsArticle instance
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          article['title'], // Use the title from your list
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.bold,
+                          SizedBox(height: 8),
+                          Text(
+                            article
+                                .title, // Use the title from your NewsArticle instance
+                            style: TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     );
                   },
+
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(width: 21);
                   },
@@ -102,7 +136,7 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 26),
+                        fontSize: 18),
                   ),
                 ],
               ),
@@ -131,4 +165,11 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class NewsArticle {
+  final String iconPath;
+  final String title;
+
+  NewsArticle({required this.iconPath, required this.title});
 }

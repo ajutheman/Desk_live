@@ -79,18 +79,19 @@ class NewsCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: Container(
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Text(
-            title, // Use the provided title
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14, // Adjust the font size as needed
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
+        // child:
+        // Align(
+        //   alignment: Alignment.bottomCenter,
+        //   child: Text(
+        //     title, // Use the provided title
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontSize: 14, // Adjust the font size as needed
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //     textAlign: TextAlign.center,
+        //   ),
+        // ),
         height: screenHeight(context, dividedBy: 3.5),
         width: screenWidth(context, dividedBy: 1.1),
         decoration: BoxDecoration(
@@ -147,6 +148,34 @@ class NewsCard extends StatelessWidget {
         //     // ),
         //   ],
         // ),
+        child: Container(
+          height: screenHeight(context, dividedBy: 3.5),
+          width: screenWidth(context, dividedBy: 1.1),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            gradient: LinearGradient(
+                begin: Alignment.center,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(.1),
+                  Colors.black.withOpacity(1),
+                ]),
+          ),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child:
+                // TextWidget(text: title),
+                Text(
+              title, // Use the provided title
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18, // Adjust the font size as needed
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       ),
     );
   }
