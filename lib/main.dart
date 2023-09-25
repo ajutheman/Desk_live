@@ -1,5 +1,6 @@
 import 'package:app_templet/pages/feeder_page.dart';
 import 'package:app_templet/pages/home_screen.dart';
+import 'package:app_templet/pages/main_news.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const FeederPage(),
+      home: const MainNews(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -22,11 +22,12 @@ class TextWidget extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontSize: fontSize ?? 13,
-          fontFamily: fontFamily,
-          color: textcolor,
-          height: linespace,
-          fontWeight: fontWeight),
+        fontSize: fontSize ?? 13,
+        fontFamily: fontFamily,
+        color: textcolor,
+        height: linespace,
+        fontWeight: fontWeight,
+      ),
     );
   }
 }
