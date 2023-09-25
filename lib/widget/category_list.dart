@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Category {
+  final String icon;
   final String name;
   final String details;
   final Color color;
+  final Widget screen;
 
-  Category(this.name, this.details, this.color);
+  Category({
+    required this.name,
+    required this.details,
+    required this.color,
+    required this.screen,
+    required this.icon,
+  });
 }
 
 class CategoryList extends StatefulWidget {
@@ -14,183 +22,164 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
-  int selectedCategoryIndex = -1;
+  int selectedCategoryIndex = 0;
 
-  // Define your list of categories here
   final List<Category> categories = [
-    Category("Category 1", "Category 1 Details", Colors.red),
-    Category("Category 2", "Category 2 Details", Colors.blue),
-    Category("Category 3", "Category 1 Details", Colors.red),
-    Category("Category 4", "Category 2 Details", Colors.blue),
+    Category(
+      name: "Category 1",
+      details: "Category 1fkasas Details",
+      color: Colors.red,
+      icon: "assets/icons/fluent-mdl2_world.png",
+      screen: Container(
+        child: Center(
+          child: Text("Content for Category 12"),
+        ),
+      ),
+    ),
+    Category(
+      name: "Category 1",
+      details: "Category 1 Details",
+      color: Colors.red,
+      icon: "icon1",
+      screen: Container(
+        child: Center(
+          child: Text("Content for Category 13"),
+        ),
+      ),
+    ),
+    Category(
+      name: "Category 1",
+      details: "Category 1 Details",
+      color: Colors.red,
+      icon: "icon1",
+      screen: Container(
+        child: Center(
+          child: Text("Content for Category 14"),
+        ),
+      ),
+    ),
+    Category(
+      name: "Category 2",
+      details: "Category 2 Details",
+      color: Colors.blue,
+      icon: "icon2",
+      screen: Container(
+        child: Center(
+          child: Text("Content for Category 25"),
+        ),
+      ),
+    ),
     // Add more categories as needed
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Add a title or label for the category list
-        Text(
-          'Categories',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Categories',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            _tabSection(context, categories, selectedCategoryIndex),
+          ],
         ),
+      ),
+    );
+  }
 
-        SizedBox(height: 10),
-        // List of categories using a ListView.builder
-        Container(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 70,
-            color: Colors.grey[200],
-            child: Center(
-              child: ListView.separated(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  final category = categories[index];
-                  final isSelected = index == selectedCategoryIndex;
+  Widget _tabSection(BuildContext context, List<Category> categories,
+      int selectedCategoryIndex) {
+    double containerSize = 20.0; // Initial size of the circular container
 
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategoryIndex = isSelected ? -1 : index;
-                      });
-                    },
-                    child: Container(
-                      width: 90,
-                      height: 90,
-                      //color: isSelected ? Colors.yellow : Colors.transparent,
-                      padding: EdgeInsets.all(10),
-                      child: Row(
+    return DefaultTabController(
+      length: categories.length,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: categories.asMap().entries.map((entry) {
+              final index = entry.key;
+              final category = entry.value;
+              final isSelected = index == selectedCategoryIndex;
+              final iconSize = isSelected ? 30.0 : 20.0;
+
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedCategoryIndex = index;
+                    containerSize =
+                        isSelected ? 30.0 : 20.0; // Update container size
+                  });
+                },
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  // Animation duration
+                  curve: Curves.easeInOut,
+                  // Animation curve
+                  width: iconSize,
+                  height: iconSize,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isSelected ? category.color : Colors.transparent,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.category,
+                      color: isSelected ? Colors.white : category.color,
+                      size: iconSize,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          SizedBox(height: 10),
+          Container(
+            height: MediaQuery.of(context).size.height / 3,
+            child: Column(
+              children: [
+                if (selectedCategoryIndex >= 0 &&
+                    selectedCategoryIndex < categories.length)
+                  Card(
+                    elevation: 3,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
                         children: [
-                          Column(
-                            children: [
-                              Container(
-                                height: 47,
-                                width: 47,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? Colors.yellow
-                                        : Colors.transparent,
-                                  ),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.circle,
-                                    size: 30,
-                                    color: isSelected
-                                        ? Colors.grey[200]
-                                        : category.color,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 60),
-                            ],
+                          Text(
+                            categories[selectedCategoryIndex].name,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          SizedBox(height: 10),
+                          Text(categories[selectedCategoryIndex].details),
                         ],
                       ),
                     ),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(width: 21);
-                },
-              ),
+                  ),
+                Expanded(
+                  child: TabBarView(
+                    children:
+                        categories.map((category) => category.screen).toList(),
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-        selectedCategoryIndex != -1
-            ? Padding(
-                padding: const EdgeInsets.all(19.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 0.1,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                                20.0), // Adjust the radius as needed
-                          ),
-                        ),
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          categories[selectedCategoryIndex].details,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 0.1,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                                20.0), // Adjust the radius as needed
-                          ),
-                        ),
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          categories[selectedCategoryIndex].details,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 0.1,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                                20.0), // Adjust the radius as needed
-                          ),
-                        ),
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          categories[selectedCategoryIndex].details,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 0.1,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                                20.0), // Adjust the radius as needed
-                          ),
-                        ),
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          categories[selectedCategoryIndex].details,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : SizedBox(),
-      ],
+        ],
+      ),
     );
   }
 }
