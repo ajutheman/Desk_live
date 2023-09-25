@@ -1,9 +1,9 @@
+import 'package:app_templet/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../utils.dart';
 import '../widget/category_biulder.dart';
-import '../widget/news_card.dart';
 // Import your CategoryList widget
 
 class HomeScreen extends StatelessWidget {
@@ -39,17 +39,22 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "DeskLive",
-            style: TextStyle(fontSize: 22),
-          ),
-        ),
+        title:
+            Center(child: Image(image: AssetImage("assets/images/DeskLive.png"))
+                // Text(
+                //   "DeskLive",
+                //   style: TextStyle(fontSize: 22),
+                // ),
+                ),
         actions: [
           IconButton(
             icon: Icon(Icons.search, size: 36),
             onPressed: () {
-              // Handle search action
+              // Navigate to the second page when the IconButton is pressed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchPage()),
+              );
             },
           ),
         ],
@@ -122,9 +127,10 @@ class HomeScreen extends StatelessWidget {
               // width: screenWidth(context, dividedBy: 1.2),
               child: NewsCard(
                 imagePath:
-                    'assets/images/pexels-photo-1684916.jpg', // Provide the image path
-                title:
-                    "കേരളത്തിൽ2 ജില്ലകളിൽയെല്ലോ അലർട്ട് പ്രഖ്യാപിച്ചു", // Provide the title
+                    'https://cdn.britannica.com/87/186687-050-3AA9E551/Justin-Trudeau-2015.jpg', // Provide the image path
+                title: "വിമാനത്തിന് തകരാർ,"
+                    "ജസ്റ്റിൻ ട്രൂഡോയും സംഘവും"
+                    " ഇന്ന് മടങ്ങില്ല ഇന്ത്യയിൽ തുടരും", // Provide the title
               ),
             ),
             Padding(
@@ -172,4 +178,121 @@ class NewsArticle {
   final String title;
 
   NewsArticle({required this.iconPath, required this.title});
+}
+
+class NewsCard extends StatelessWidget {
+  final String imagePath;
+  final String title;
+
+  NewsCard({required this.imagePath, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      child: Container(
+        // child:
+        // Align(
+        //   alignment: Alignment.bottomCenter,
+        //   child: Text(
+        //     title, // Use the provided title
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontSize: 14, // Adjust the font size as needed
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //     textAlign: TextAlign.center,
+        //   ),
+        // ),
+        height: screenHeight(context, dividedBy: 3.5),
+        width: screenWidth(context, dividedBy: 1.1),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(imagePath),
+              // image: AssetImage(
+              //   imagePath,
+              // ),
+              fit: BoxFit.cover),
+          borderRadius: BorderRadius.all(
+            Radius.circular(20.0),
+          ),
+        ),
+        // child: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.stretch,
+        //   children: [
+        //     // Background asset image
+        //     Image.asset(
+        //       imagePath, // Use the provided imagePath
+        //       height: 100, // Adjust the height as needed
+        //       fit: BoxFit.cover,
+        //     ),
+        //
+        //     // Gradient overlay
+        //     // Container(
+        //     //   height: 20, // Adjust the height as needed
+        //     //   decoration: BoxDecoration(
+        //     //     gradient: LinearGradient(
+        //     //       begin: Alignment.topCenter,
+        //     //       end: Alignment.bottomCenter,
+        //     //       colors: [
+        //     //         Colors.transparent, // Start with transparent color
+        //     //         Colors.black.withOpacity(0.5), // Adjust opacity as needed
+        //     //       ],
+        //     //     ),
+        //     //   ),
+        //     // ),
+        //
+        //     // Text on top of the image
+        //     // Expanded(
+        //     //   child: Center(
+        //     //     child: Padding(
+        //     //       padding: const EdgeInsets.all(16.0),
+        //           child: Text(
+        //             title, // Use the provided title
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //               fontSize: 24, // Adjust the font size as needed
+        //               fontWeight: FontWeight.bold,
+        //             ),
+        //             textAlign: TextAlign.center,
+        //           ),
+        //     //     ),
+        //     //   ),
+        //     // ),
+        //   ],
+        // ),
+        child: Container(
+          height: screenHeight(context, dividedBy: 3.5),
+          width: screenWidth(context, dividedBy: 1.1),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            gradient: LinearGradient(
+                begin: Alignment.center,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(.1),
+                  Colors.black.withOpacity(1),
+                ]),
+          ),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child:
+                // TextWidget(text: title),
+                Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                title, // Use the provided title
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 19, // Adjust the font size as needed
+                  fontWeight: FontWeight.w700, height: 1.5,
+                ),
+                // textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

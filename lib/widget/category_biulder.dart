@@ -82,6 +82,7 @@ class CategoryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> headline1 = [];
     List<String> imageUrls = [
       'https://images.pexels.com/photos/3021310/pexels-photo-3021310.jpeg?auto=compress&cs=tinysrgb&w=800',
       'https://images.pexels.com/photos/3021310/pexels-photo-3021310.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -123,7 +124,7 @@ class CategoryDetails extends StatelessWidget {
           buildCard(imageIndex, headline),
           buildCard(imageIndex, headline),
           Card(
-            color: Color(0xffFFECA1),
+            color: Color(0xfffFECA1),
             // color: Color(0xFFECA1),
             child: Column(
               children: [
