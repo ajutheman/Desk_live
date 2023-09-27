@@ -1,5 +1,9 @@
+import 'package:app_templet/pages/feeder_page.dart';
 import 'package:app_templet/pages/home_screen.dart';
+import 'package:app_templet/pages/main_news.dart';
+import 'package:app_templet/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +15,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        // statusBarBrightness: Brightness.light// Set your desired status bar color
+      ),
+    );
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -29,11 +39,13 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffFFFAE7)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
-      // MainNews(),
+      home:
+          // FeederPage(),
+          // MainNews(),
+          SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

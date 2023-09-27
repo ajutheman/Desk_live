@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../utils.dart';
 import '../widget/text_widgect_home_page.dart';
 
 class FeederPage extends StatefulWidget {
@@ -94,33 +95,41 @@ class _FeederPageState extends State<FeederPage> {
                     )),
                 isTapped
                     ? Positioned(
-                        width: MediaQuery.of(context).size.width,
-                        bottom: 20,
-                        child: Container(
-                          color: Colors.transparent,
-                          child: const GNav(
-                              padding: EdgeInsets.only(
-                                right: 40,
-                                left: 20,
-                                bottom: 30,
-                              ),
-                              activeColor: Colors.red,
-                              color: Colors.white,
-                              tabs: [
-                                GButton(
-                                  icon: Icons.favorite_outline,
-                                ),
-                                GButton(
-                                  icon: Icons.mode_comment_outlined,
-                                ),
-                                GButton(
-                                  icon: Icons.ios_share,
-                                ),
-                                GButton(icon: Icons.bookmark_border_outlined),
-                              ]),
+                        bottom: 50,
+                        child: Center(
+                          child: Container(
+                            height: 50,
+                            width: screenWidth(
+                              context,
+                            ),
+                            // color: Colors.red,
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: SvgPicture.asset(
+                                      'assets/icons/icon_favourite.svg',
+                                    ),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: SvgPicture.asset(
+                                          'assets/icons/icon_comment.svg')),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: SvgPicture.asset(
+                                          'assets/icons/icon_share.svg')),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: SvgPicture.asset(
+                                          'assets/icons/icon_save.svg')),
+                                ]),
+                          ),
                         ),
                       )
-                    : const SizedBox()
+                    : SizedBox(),
               ],
             ),
           );
