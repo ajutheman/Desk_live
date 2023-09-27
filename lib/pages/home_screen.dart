@@ -7,7 +7,14 @@ import '../utils.dart';
 
 //
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<NewsArticle> newsArticles = [
     NewsArticle(
       iconPath:
@@ -248,8 +255,6 @@ class HomeScreen extends StatelessWidget {
     ),
   ];
 
-  HomeScreen({Key? key});
-
   @override
   Widget build(BuildContext context) {
     //  var newsArticles;
@@ -278,12 +283,12 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          // padding: EdgeInsets.only(bottom: 20),
-          // color: Colors.cyan,
-          height: screenHeight(context, dividedBy: 1),
-          width: screenWidth(context, dividedBy: 1),
+      body: Container(
+        // padding: EdgeInsets.only(bottom: 20),
+        // color: Colors.cyan,
+        height: screenHeight(context, dividedBy: 1),
+        width: screenWidth(context, dividedBy: 1),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               // List of news articles using a ListView.builder
@@ -369,7 +374,8 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              CategoryBuilder(newsModel: newsList),
+              CategoryBuilder(newsModel: newsList)
+              // CategoryBuilder(newsModel: newsList),
               // SizedBox(
               //   height: 100,
               // ),
@@ -427,50 +433,7 @@ class NewsCard extends StatelessWidget {
             Radius.circular(20.0),
           ),
         ),
-        // child: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.stretch,
-        //   children: [
-        //     // Background asset image
-        //     Image.asset(
-        //       imagePath, // Use the provided imagePath
-        //       height: 100, // Adjust the height as needed
-        //       fit: BoxFit.cover,
-        //     ),
         //
-        //     // Gradient overlay
-        //     // Container(
-        //     //   height: 20, // Adjust the height as needed
-        //     //   decoration: BoxDecoration(
-        //     //     gradient: LinearGradient(
-        //     //       begin: Alignment.topCenter,
-        //     //       end: Alignment.bottomCenter,
-        //     //       colors: [
-        //     //         Colors.transparent, // Start with transparent color
-        //     //         Colors.black.withOpacity(0.5), // Adjust opacity as needed
-        //     //       ],
-        //     //     ),
-        //     //   ),
-        //     // ),
-        //
-        //     // Text on top of the image
-        //     // Expanded(
-        //     //   child: Center(
-        //     //     child: Padding(
-        //     //       padding: const EdgeInsets.all(16.0),
-        //           child: Text(
-        //             title, // Use the provided title
-        //             style: TextStyle(
-        //               color: Colors.white,
-        //               fontSize: 24, // Adjust the font size as needed
-        //               fontWeight: FontWeight.bold,
-        //             ),
-        //             textAlign: TextAlign.center,
-        //           ),
-        //     //     ),
-        //     //   ),
-        //     // ),
-        //   ],
-        // ),
         child: Container(
           height: screenHeight(context, dividedBy: 3.5),
           width: screenWidth(context, dividedBy: 1.1),
@@ -489,7 +452,7 @@ class NewsCard extends StatelessWidget {
             child:
                 // TextWidget(text: title),
                 Padding(
-              padding: const EdgeInsets.only(left: 20.0),
+              padding: const EdgeInsets.only(left: 20.0, bottom: 8),
               child: Text(
                 title, // Use the provided title
                 style: TextStyle(
@@ -533,54 +496,50 @@ class _CategoryBuilderState extends State<CategoryBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            width: screenWidth(context, dividedBy: 1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(iconsList.length, (index) {
-                bool isSelected = selectedContainerIndex == index;
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          width: screenWidth(context, dividedBy: 1),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(iconsList.length, (index) {
+              bool isSelected = selectedContainerIndex == index;
 
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedContainerIndex =
-                          isSelected ? -1 : index; // Toggle selection
-                    });
-                  },
-                  child: Container(
-                    width: isSelected ? 65 : 49,
-                    height: isSelected ? 65 : 49,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: isSelected ? Color(0xffFECC07) : Color(0xffFFECA1),
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        iconsList[index],
-                      ),
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedContainerIndex =
+                        isSelected ? -1 : index; // Toggle selection
+                  });
+                },
+                child: Container(
+                  width: isSelected ? 65 : 49,
+                  height: isSelected ? 65 : 49,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isSelected ? Color(0xffFECC07) : Color(0xffFFECA1),
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      iconsList[index],
                     ),
                   ),
-                );
-              }),
-            ),
+                ),
+              );
+            }),
           ),
-          selectedContainerIndex != -1
-              ? CategoryDetails(
-                  newsList: widget.newsModel
-                      .where((element) =>
-                          element.categoryModel.id ==
-                          selectedContainerIndex - 1)
-                      .toList(),
-                  imageIndex: selectedContainerIndex,
-                  headline:
-                      'News Headline for category $selectedContainerIndex',
-                )
-              : SizedBox(),
-        ],
-      ),
+        ),
+        selectedContainerIndex != -1
+            ? CategoryDetails(
+                newsList: widget.newsModel
+                    .where((element) =>
+                        element.categoryModel.id == selectedContainerIndex - 1)
+                    .toList(),
+                imageIndex: selectedContainerIndex,
+                headline: 'News Headline for category $selectedContainerIndex',
+              )
+            : SizedBox(),
+      ],
     );
   }
 }
@@ -598,17 +557,13 @@ class CategoryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Container(
-        // color: Colors.green,
-        child: ListView.builder(
-          // physics: const NeverScrollableScrollPhysics(),
-          itemCount: newsList.length,
-          itemBuilder: (context, index) {
-            return buildCard(newsModel: newsList[index]);
-          },
-        ),
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: newsList.length,
+      itemBuilder: (context, index) {
+        return buildCard(newsModel: newsList[index]);
+      },
     );
   }
 
