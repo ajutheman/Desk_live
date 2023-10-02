@@ -7,6 +7,8 @@ class TextWidget extends StatelessWidget {
   String? fontFamily;
   Color? textcolor;
   FontWeight? fontWeight;
+  int? maxline;
+  TextOverflow? overflow;
 
   TextWidget(
       {super.key,
@@ -15,7 +17,9 @@ class TextWidget extends StatelessWidget {
       this.fontFamily,
       this.linespace,
       this.textcolor,
-      this.fontWeight});
+      this.fontWeight,
+      this.maxline,
+      this.overflow});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,9 @@ class TextWidget extends StatelessWidget {
         color: textcolor,
         height: linespace,
         fontWeight: fontWeight,
+        overflow: overflow,
       ),
+      maxLines: maxline,
     );
   }
 }

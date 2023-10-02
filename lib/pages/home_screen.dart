@@ -264,13 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xffFFFAE7),
       appBar: AppBar(
         backgroundColor: Color(0xffFFFAE7),
-        title:
-            Center(child: Image(image: AssetImage("assets/images/DeskLive.png"))
-                // Text(
-                //   "DeskLive",
-                //   style: TextStyle(fontSize: 22),
-                // ),
-                ),
+        title: Center(
+            child: Image(image: AssetImage("assets/images/DeskLive.png"))),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 18),
@@ -342,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               article.title,
                               // Use the title from your NewsArticle instance
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 9,
                                 fontWeight: FontWeight.bold,
                               ),

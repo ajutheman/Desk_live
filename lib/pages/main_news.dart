@@ -14,7 +14,7 @@ class MainNews extends StatefulWidget {
 
 class _MainNewsState extends State<MainNews> {
   bool isTapped = false;
-
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,14 +42,16 @@ class _MainNewsState extends State<MainNews> {
                       child: Container(
                         width: screenWidth(context),
                         height: screenHeight(context, dividedBy: 2.1),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(15),
-                                bottomLeft: Radius.circular(15)),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://cdn.britannica.com/87/186687-050-3AA9E551/Justin-Trudeau-2015.jpg'),
-                                fit: BoxFit.cover)),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15)),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'https://cdn.britannica.com/87/186687-050-3AA9E551/Justin-Trudeau-2015.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                         child: Container(
                           height: MediaQuery.of(context).size.height / 2,
                           width: MediaQuery.of(context).size.width,
@@ -77,7 +79,7 @@ class _MainNewsState extends State<MainNews> {
                                     textcolor: Colors.white,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
                                 Padding(
@@ -95,16 +97,26 @@ class _MainNewsState extends State<MainNews> {
                       ),
                     ),
                     Positioned(
-                        left: 30,
-                        bottom: 12,
-                        // top: 416,
-                        child: Container(
-                          height: 21,
-                          width: 71,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.yellow),
-                        )),
+                      left: 30,
+                      bottom: 12,
+                      // top: 416,
+                      child: Container(
+                        height: 21,
+                        width: 71,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.yellow),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Image(
+                            image: AssetImage(
+                              "assets/images/DeskLive.png",
+                            ),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
                     isTapped
                         ? Positioned(
                             top: 0,
@@ -114,13 +126,16 @@ class _MainNewsState extends State<MainNews> {
                               width: screenWidth(context),
                               child: ListTile(
                                 leading: IconButton(
-                                  icon: Icon(Icons.arrow_back, size: 27),
+                                  icon: const Icon(Icons.arrow_back, size: 27),
                                   onPressed: () {},
                                 ),
                                 title: const Center(
-                                    child: Image(
-                                        image: AssetImage(
-                                            "assets/images/DeskLive.png"))),
+                                  child: Image(
+                                    image: AssetImage(
+                                      "assets/images/DeskLive.png",
+                                    ),
+                                  ),
+                                ),
                                 trailing: IconButton(
                                   icon: Icon(Icons.refresh_outlined, size: 32),
                                   onPressed: () {},
@@ -176,9 +191,16 @@ class _MainNewsState extends State<MainNews> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              print('object');
+                                              setState(() {
+                                                isLiked = !isLiked;
+                                              });
+                                            },
                                             icon: SvgPicture.asset(
-                                              'assets/icons/icon_fav_black.svg',
+                                              isLiked
+                                                  ? 'assets/icons/icon_fav_black.svg'
+                                                  : 'assets/icons/icon_fav_liked.svg',
                                             ),
                                           ),
                                           IconButton(
