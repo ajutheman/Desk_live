@@ -2,6 +2,7 @@ import 'package:app_templet/model/news_model.dart';
 import 'package:app_templet/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../utils.dart';
 
@@ -271,15 +272,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 // ),
                 ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.search, size: 36),
-            onPressed: () {
-              // Navigate to the second page when the IconButton is pressed
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 18),
+            child: IconButton(
+              icon: Icon(Icons.search, size: 36),
+              onPressed: () {
+                // Navigate to the second page when the IconButton is pressed
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -316,8 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             Container(
-                              height: 76,
-                              width: 76,
+                              height: 86,
+                              width: 80,
                               decoration: BoxDecoration(
                                 color: Color(0xffD9D9D9),
                                 border: Border.all(
@@ -349,20 +353,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
 
                     separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(width: 21);
+                      return SizedBox(width: 25);
                     },
                   ),
                 ),
               ),
-
-              NewsCard(
-                imagePath:
-                    'https://cdn.britannica.com/87/186687-050-3AA9E551/Justin-Trudeau-2015.jpg',
-                // Provide the image path
-                title: "വിമാനത്തിന് തകരാർ,"
-                    "ജസ്റ്റിൻ ട്രൂഡോയും സംഘവും"
-                    " ഇന്ന് മടങ്ങില്ല ഇന്ത്യയിൽ തുടരും", // Provide the title
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  height: 246,
+                  width: screenWidth(context, dividedBy: 1),
+                  child: PageView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      for (final newsItem in newsList)
+                        NewsCard(
+                          imagePath: newsItem.imageUrl,
+                          title: newsItem.title,
+                          dateTime: newsItem.dateTime,
+                        ),
+                    ],
+                  ),
+                ),
               ),
+
+              //
               const Padding(
                 padding: EdgeInsets.all(18.0),
                 child: Row(
@@ -402,71 +417,77 @@ class NewsArticle {
 class NewsCard extends StatelessWidget {
   final String imagePath;
   final String title;
+  final DateTime dateTime;
 
-  NewsCard({required this.imagePath, required this.title});
+  NewsCard({
+    required this.imagePath,
+    required this.title,
+    required this.dateTime,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      child: Container(
-        // child:
-        // Align(
-        //   alignment: Alignment.bottomCenter,
-        //   child: Text(
-        //     title, // Use the provided title
-        //     style: TextStyle(
-        //       color: Colors.white,
-        //       fontSize: 14, // Adjust the font size as needed
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //     textAlign: TextAlign.center,
-        //   ),
-        // ),
-        height: screenHeight(context, dividedBy: 3.7),
-        width: screenWidth(context, dividedBy: 1.1),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(imagePath),
-              // image: AssetImage(
-              //   imagePath,
-              // ),
-              fit: BoxFit.cover),
-          borderRadius: BorderRadius.all(
-            Radius.circular(20.0),
-          ),
-        ),
-        //
-        child: Container(
-          height: screenHeight(context, dividedBy: 3.5),
-          width: screenWidth(context, dividedBy: 1.1),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            gradient: LinearGradient(
-                begin: Alignment.center,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withOpacity(.1),
-                  Colors.black.withOpacity(1),
-                ]),
-          ),
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child:
-                // TextWidget(text: title),
-                Padding(
-              padding: const EdgeInsets.only(left: 20.0, bottom: 8),
-              child: Text(
-                title, // Use the provided title
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19, // Adjust the font size as needed
-                  fontWeight: FontWeight.w700, height: 1.5,
+    final timeAgo = getTimeAgo(dateTime);
+    return Container(
+      height: 137,
+      width: screenWidth(context, dividedBy: 1.1),
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imagePath),
+                  fit: BoxFit.cover,
                 ),
-                // textAlign: TextAlign.center,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20.0),
+                ),
               ),
             ),
-          ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                gradient: LinearGradient(
+                  begin: Alignment.center,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(.1),
+                    Colors.black.withOpacity(1),
+                  ],
+                ),
+              ),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.5, bottom: 12.5),
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      height: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 3,
+              left: 10.5,
+              child: Text(
+                timeAgo,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -601,5 +622,21 @@ class CategoryDetails extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String getTimeAgo(DateTime dateTime) {
+  final now = DateTime.now();
+  final difference = now.difference(dateTime);
+
+  if (difference.inSeconds < 60) {
+    return '${difference.inSeconds} seconds ago';
+  } else if (difference.inMinutes < 60) {
+    return '${difference.inMinutes} minutes ago';
+  } else if (difference.inHours < 24) {
+    return '${difference.inHours} hours ago';
+  } else {
+    final dateFormatter = DateFormat('MMM dd, yyyy');
+    return dateFormatter.format(dateTime);
   }
 }

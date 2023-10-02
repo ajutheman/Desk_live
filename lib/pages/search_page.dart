@@ -1,4 +1,6 @@
+import 'package:app_templet/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../model/news_model.dart';
 
@@ -232,52 +234,235 @@ class _SearchPageState extends State<SearchPage> {
       backgroundColor: Color(0xffFFFAE7),
       appBar: AppBar(
         backgroundColor: Color(0xffFFFAE7),
-        title:
-            Center(child: Image(image: AssetImage("assets/images/DeskLive.png"))
-                // Text(
-                //   "DeskLive",
-                //   style: TextStyle(fontSize: 22),
-                // ),
-                ),
+        title: Center(
+          child: Image(
+            image: AssetImage("assets/images/DeskLive.png"),
+          ),
+        ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.refresh_outlined, size: 36),
-            onPressed: () {
-              // Navigate to the second page when the IconButton is pressed
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 18),
+            child: IconButton(
+              icon: Icon(Icons.refresh_outlined, size: 36),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
+              },
+            ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 18.0),
-        child: Column(children: [
-          Center(
-            child: Container(
-              width: 380, // Set the desired width
-              height: 60, // Set the desired height
-              decoration: BoxDecoration(
-                color: Colors.white70, // Set the desired background color
-                borderRadius:
-                    BorderRadius.circular(25), // Optional: add rounded corners
-              ),
-              child: SearchBar(
-                // backgroundColor: Color(0xffFFFFFF),
-                leading: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    print('command');
-                  },
+      body: Container(
+        color: Color(0xffFFFAE7),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 18.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: screenWidth(context),
+                    height: 60,
+                    decoration: BoxDecoration(
+                      // color: Colors.red,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 18),
+                      child: SearchBar(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        leading: IconButton(
+                          icon: const Icon(Icons.search),
+                          onPressed: () {
+                            print('command');
+                          },
+                        ),
+                        hintText: "Search",
+                      ),
+                    ),
+                  ),
                 ),
-                hintText: "Search",
-              ),
+                SizedBox(height: 10),
+                Container(
+                  width: screenWidth(context, dividedBy: 1),
+                  height: screenHeight(context, dividedBy: 4),
+                  // color: Colors.yellow.shade100,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Categories",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 200,
+                  width: screenWidth(context, dividedBy: 1),
+                  child: ListView(
+                    scrollDirection: Axis
+                        .horizontal, // Set the scroll direction to horizontal
+                    children: <Widget>[
+                      for (final newsItem in newsList)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5),
+                          child: NewsCard(
+                            imagePath: newsItem.imageUrl,
+                            title: newsItem.title, dateTime: newsItem.dateTime,
+                            // You can pass other properties like description, location, etc. if needed
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: newsList.length,
+                  itemBuilder: (context, index) {
+                    return buildCard(newsModel: newsList[index]);
+                  },
+                )
+              ],
             ),
           ),
-        ]),
+        ),
       ),
     );
+  }
+
+  Widget buildCard({required NewsModel newsModel}) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 1.0, right: 9, bottom: 3, top: 5),
+      child: Card(
+        color: Color(0xffFFECA1),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  // width: 340,
+                  margin: EdgeInsets.all(16),
+                  child: CircleAvatar(
+                    radius: 30,
+                    // backgroundColor: Color(0xFF0000FF),
+                    backgroundImage: NetworkImage(newsModel.imageUrl),
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    newsModel.title,
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NewsCard extends StatelessWidget {
+  final String imagePath;
+  final String title;
+  final DateTime dateTime;
+
+  NewsCard(
+      {required this.imagePath, required this.title, required this.dateTime});
+
+  @override
+  Widget build(BuildContext context) {
+    final timeAgo = getTimeAgo(dateTime);
+    return Container(
+      height: 137,
+      width: screenWidth(context, dividedBy: 1.5),
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20.0),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                gradient: LinearGradient(
+                  begin: Alignment.center,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(.1),
+                    Colors.black.withOpacity(1),
+                  ],
+                ),
+              ),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.5, bottom: 12.5),
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      height: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 3,
+              left: 10.5,
+              child: Text(
+                timeAgo,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+String getTimeAgo(DateTime dateTime) {
+  final now = DateTime.now();
+  final difference = now.difference(dateTime);
+
+  if (difference.inSeconds < 60) {
+    return '${difference.inSeconds} seconds ago';
+  } else if (difference.inMinutes < 60) {
+    return '${difference.inMinutes} minutes ago';
+  } else if (difference.inHours < 24) {
+    return '${difference.inHours} hours ago';
+  } else {
+    final dateFormatter = DateFormat('MMM dd, yyyy');
+    return dateFormatter.format(dateTime);
   }
 }

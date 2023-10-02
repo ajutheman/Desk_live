@@ -116,6 +116,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///Users/ajmalm/.pub-cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///Users/ajmalm/.pub-cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
@@ -308,7 +314,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-09-27T10:20:28.180784Z",
+  "generated": "2023-10-02T06:24:53.896919Z",
   "generator": "pub",
   "generatorVersion": "3.1.0"
 }
