@@ -281,14 +281,17 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         // padding: EdgeInsets.only(bottom: 20),
         // color: Colors.cyan,
+        color: Color(0xffFFFAE7),
         height: screenHeight(context, dividedBy: 1),
-        width: screenWidth(context, dividedBy: 1),
+        width: screenWidth(
+          context,
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [
               // List of news articles using a ListView.builder
               Padding(
-                padding: const EdgeInsets.all(29.0),
+                padding: const EdgeInsets.all(18.0),
                 child: Container(
                   width: screenWidth(context),
                   //  MediaQuery.of(context).size.width,
