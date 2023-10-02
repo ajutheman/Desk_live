@@ -1,9 +1,11 @@
+import 'package:app_templet/pages/main_news.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../utils.dart';
 import '../widget/text_widgect_home_page.dart';
+import 'home_screen.dart';
 
 class FeederPage extends StatefulWidget {
   const FeederPage({super.key});
@@ -14,6 +16,8 @@ class FeederPage extends StatefulWidget {
 
 class _FeederPageState extends State<FeederPage> {
   bool isTapped = false;
+  bool isLiked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +28,13 @@ class _FeederPageState extends State<FeederPage> {
             onTap: () => setState(() {
               isTapped = !isTapped;
             }),
+            onPanStart: (details) =>
+                Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            )),
+            onDoubleTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => MainNews(),
+            )),
             child: Stack(
               children: [
                 Container(
@@ -62,19 +73,20 @@ class _FeederPageState extends State<FeederPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 25, right: 50),
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 200),
+                          padding: const EdgeInsets.only(top: 90),
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(right: 30),
                                   child: TextWidget(
-                                      text:
-                                          'കേരളത്തിൽ 2 ജില്ലകളിൽ യെല്ലോ അലർട്ട് പ്രഖ്യാപിച്ചു...',
-                                      fontSize: 33,
-                                      linespace: 1,
-                                      textcolor: const Color(0xffFECC07),
-                                      fontWeight: FontWeight.w700),
+                                    text:
+                                        'കേരളത്തിൽ 2 ജില്ലകളിൽ യെല്ലോ അലർട്ട് പ്രഖ്യാപിച്ചു...',
+                                    fontSize: 33,
+                                    linespace: 1,
+                                    textcolor: const Color(0xffFECC07),
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -108,10 +120,15 @@ class _FeederPageState extends State<FeederPage> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: SvgPicture.asset(
-                                      'assets/icons/icon_favourite.svg',
-                                    ),
+                                    onPressed: () {
+                                      print('object');
+                                      setState(() {
+                                        isLiked = !isLiked;
+                                      });
+                                    },
+                                    icon: SvgPicture.asset(isLiked
+                                        ? 'assets/icons/icon_favourite.svg'
+                                        : 'assets/icons/icon_fav_liked.svg'),
                                   ),
                                   IconButton(
                                       onPressed: () {},

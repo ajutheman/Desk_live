@@ -1,4 +1,6 @@
+import 'package:app_templet/widget/text_widgect_home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -8,20 +10,16 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  List isSelectetList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Center(child: Image(image: AssetImage("assets/images/DeskLive.png"))
-                // Text(
-                //   "DeskLive",
-                //   style: TextStyle(fontSize: 22),
-                // ),
-                ),
+        title: const Center(
+            child: Image(image: AssetImage("assets/images/DeskLive.png"))),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh_outlined, size: 36),
+            icon: const Icon(Icons.refresh_outlined, size: 36),
             onPressed: () {
               // Navigate to the second page when the IconButton is pressed
               Navigator.push(
@@ -53,7 +51,62 @@ class _SearchPageState extends State<SearchPage> {
               hintText: "Search",
             ),
           ),
-        )
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Container(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            children: [
+              TextWidget(
+                text: 'Popular tags',
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+              const Spacer(),
+              SvgPicture.asset('assets/icons/populartags.svg')
+            ],
+          ),
+        ),
+        GridView.builder(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                mainAxisExtent: 40,
+                crossAxisCount: 4,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 15),
+            itemCount: 8,
+            itemBuilder: (BuildContext ctx, int index) {
+              bool isSelected = (isSelectetList.contains(index));
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (isSelected) {
+                      isSelectetList.remove(index);
+                    } else {
+                      isSelectetList.add(index);
+                    }
+                  });
+                },
+                child: Container(
+                  // height: 32,
+                  // width: 79,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: isSelected ? Color(0xffFECC07) : Color(0xffFFECA1),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                      child: TextWidget(
+                    text: '#trending',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 10,
+                  )),
+                ),
+              );
+            }),
       ]),
     );
   }

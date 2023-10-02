@@ -2,11 +2,16 @@ import 'package:app_templet/pages/feeder_page.dart';
 import 'package:app_templet/pages/home_screen.dart';
 import 'package:app_templet/pages/main_news.dart';
 import 'package:app_templet/pages/splash_screen.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,6 +27,9 @@ class MyApp extends StatelessWidget {
       ),
     );
     return MaterialApp(
+      // useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -45,6 +53,7 @@ class MyApp extends StatelessWidget {
       home:
           // FeederPage(),
           // MainNews(),
+          // HomeScreen(),
           SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
