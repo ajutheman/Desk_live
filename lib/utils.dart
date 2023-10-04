@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 screenHeight(BuildContext context, {double dividedBy = 1}) {
   return MediaQuery.of(context).size.height / dividedBy;

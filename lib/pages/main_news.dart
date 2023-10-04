@@ -106,8 +106,8 @@ class _MainNewsState extends State<MainNews> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.yellow),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(5.0),
                           child: Image(
                             image: AssetImage(
                               "assets/images/DeskLive.png",
@@ -154,72 +154,74 @@ class _MainNewsState extends State<MainNews> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20, right: 30, top: 10),
                       width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextWidget(
-                            text:
-                                'ന്യൂഡ‍ൽഹി: കാനഡയിൽ നടക്കുന്ന ഇന്ത്യാ വിരുദ്ധ നീക്കങ്ങളിൽ കനേഡിയൻ '
-                                'പ്രധാനമന്ത്രി ജസ്റ്റിൻ ട്രൂഡോയോട് ആശങ്ക അറിയിച്ച് പ്രധാനമന്ത്രി നരേന്ദ്ര മോദി. ജി 20 ഉച്ചകോടിക്കിടെ നടന്ന '
-                                'യോഗത്തിലാണ് ഇരുവരും തമ്മിൽ കൂടിക്കാഴ്ച നടത്തിയത്.\n  പ്രധാനമന്ത്രി നരേന്ദ്രമോദി കനേഡിയൻ പ്രധാനമന്ത്രി '
-                                'ജസ്റ്റിൻ ട്രൂഡോയുമായി ഭീകരവാദം ഉൾപ്പെടെയുളള വിവിധ വിഷയങ്ങൾ ചർച്ച ചെയ്‌തതായി പ്രധാനമന്ത്രിയുടെ '
-                                'ഓഫീസ് തന്നെയാണ് മാധ്യമങ്ങളെ അറിയിച്ചത്. ഇന്ത്യയോടൊപ്പം ചേർന്ന് ഖലിസ്ഥാൻ ഭീകരവാദത്തിനെതിരായി'
-                                ' പ്രവർത്തിക്കുമെന്നും ',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            textcolor: Colors.black,
-                            linespace: 1.5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: TextWidget(
-                              text: '11.09.2023 അനീഷ് ബാബു',
-                              textcolor: Color(0xff141414),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 9,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextWidget(
+                              text:
+                                  'ന്യൂഡ‍ൽഹി: കാനഡയിൽ നടക്കുന്ന ഇന്ത്യാ വിരുദ്ധ നീക്കങ്ങളിൽ കനേഡിയൻ '
+                                  'പ്രധാനമന്ത്രി ജസ്റ്റിൻ ട്രൂഡോയോട് ആശങ്ക അറിയിച്ച് പ്രധാനമന്ത്രി നരേന്ദ്ര മോദി. ജി 20 ഉച്ചകോടിക്കിടെ നടന്ന '
+                                  'യോഗത്തിലാണ് ഇരുവരും തമ്മിൽ കൂടിക്കാഴ്ച നടത്തിയത്.\n  പ്രധാനമന്ത്രി നരേന്ദ്രമോദി കനേഡിയൻ പ്രധാനമന്ത്രി '
+                                  'ജസ്റ്റിൻ ട്രൂഡോയുമായി ഭീകരവാദം ഉൾപ്പെടെയുളള വിവിധ വിഷയങ്ങൾ ചർച്ച ചെയ്‌തതായി പ്രധാനമന്ത്രിയുടെ '
+                                  'ഓഫീസ് തന്നെയാണ് മാധ്യമങ്ങളെ അറിയിച്ചത്. ഇന്ത്യയോടൊപ്പം ചേർന്ന് ഖലിസ്ഥാൻ ഭീകരവാദത്തിനെതിരായി'
+                                  ' പ്രവർത്തിക്കുമെന്നും ',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              textcolor: Colors.black,
+                              linespace: 1.5,
                             ),
-                          ),
-                          isTapped
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 60),
-                                  child: Container(
-                                    height: 50,
-                                    width: screenWidth(context),
-                                    // color: Colors.red,
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          IconButton(
-                                            onPressed: () {
-                                              print('object');
-                                              setState(() {
-                                                isLiked = !isLiked;
-                                              });
-                                            },
-                                            icon: SvgPicture.asset(
-                                              isLiked
-                                                  ? 'assets/icons/icon_fav_black.svg'
-                                                  : 'assets/icons/icon_fav_liked.svg',
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: TextWidget(
+                                text: '11.09.2023 അനീഷ് ബാബു',
+                                textcolor: Color(0xff141414),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 9,
+                              ),
+                            ),
+                            isTapped
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 50),
+                                    child: Container(
+                                      height: 50,
+                                      width: screenWidth(context),
+                                      // color: Colors.red,
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                print('object');
+                                                setState(() {
+                                                  isLiked = !isLiked;
+                                                });
+                                              },
+                                              icon: SvgPicture.asset(
+                                                isLiked
+                                                    ? 'assets/icons/icon_fav_black.svg'
+                                                    : 'assets/icons/icon_fav_liked.svg',
+                                              ),
                                             ),
-                                          ),
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: SvgPicture.asset(
-                                                  'assets/icons/icon_coment_black.svg')),
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: SvgPicture.asset(
-                                                  'assets/icons/icon_share_black.svg')),
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: SvgPicture.asset(
-                                                  'assets/icons/icon_save_black.svg')),
-                                        ]),
-                                  ),
-                                )
-                              : SizedBox(),
-                        ],
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: SvgPicture.asset(
+                                                    'assets/icons/icon_coment_black.svg')),
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: SvgPicture.asset(
+                                                    'assets/icons/icon_share_black.svg')),
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: SvgPicture.asset(
+                                                    'assets/icons/icon_save_black.svg')),
+                                          ]),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
